@@ -69,11 +69,11 @@ export default function Progress() {
   });
 
   const getWorkoutName = (programId: number) => {
-    return programs?.find(p => p.id === programId)?.name || "Unknown Workout";
+    return programs?.find(p => p.id === programId)?.name || "Entraînement inconnu";
   };
 
   const getExerciseName = (exerciseId: number) => {
-    return exercises?.find(e => e.id === exerciseId)?.name || "Unknown Exercise";
+    return exercises?.find(e => e.id === exerciseId)?.name || "Exercice inconnu";
   };
 
   const formatDuration = (startTime: string, endTime: string) => {
@@ -89,9 +89,9 @@ export default function Progress() {
     const diffTime = Math.abs(now.getTime() - date.getTime());
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
-    if (diffDays === 1) return "Yesterday";
-    if (diffDays <= 7) return `${diffDays} days ago`;
-    return date.toLocaleDateString();
+    if (diffDays === 1) return "Hier";
+    if (diffDays <= 7) return `Il y a ${diffDays} jours`;
+    return date.toLocaleDateString('fr-FR');
   };
 
   const recentSessions = sessions
@@ -115,7 +115,7 @@ export default function Progress() {
         >
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </Button>
-        <h1 className="text-xl font-semibold">Progress</h1>
+        <h1 className="text-xl font-semibold">Progrès</h1>
       </div>
 
       <div className="p-6">
@@ -124,36 +124,36 @@ export default function Progress() {
           <Card className="gradient-primary text-white p-4">
             <CalendarDays className="h-6 w-6 mb-2" />
             <div className="text-2xl font-bold">{stats?.weeklyWorkouts || 0}</div>
-            <div className="text-sm text-blue-100">Workouts this week</div>
+            <div className="text-sm text-blue-100">Entraînements cette semaine</div>
           </Card>
           
           <Card className="gradient-secondary text-white p-4">
             <Flame className="h-6 w-6 mb-2" />
             <div className="text-2xl font-bold">{stats?.currentStreak || 0}</div>
-            <div className="text-sm text-green-100">Day streak</div>
+            <div className="text-sm text-green-100">Jours consécutifs</div>
           </Card>
           
           <Card className="gradient-accent text-white p-4">
             <Trophy className="h-6 w-6 mb-2" />
             <div className="text-2xl font-bold">{stats?.badgeCount || 0}</div>
-            <div className="text-sm text-orange-100">Badges earned</div>
+            <div className="text-sm text-orange-100">Badges obtenus</div>
           </Card>
           
           <Card className="gradient-purple text-white p-4">
             <TrendingUp className="h-6 w-6 mb-2" />
             <div className="text-2xl font-bold">{stats?.totalVolume || 0}K</div>
-            <div className="text-sm text-purple-100">Total volume (lbs)</div>
+            <div className="text-sm text-purple-100">Volume total (kg)</div>
           </Card>
         </div>
 
         {/* Progress Chart Placeholder */}
         <Card className="shadow-sm p-4 mb-6">
-          <h3 className="font-semibold text-gray-800 mb-4">Strength Progress</h3>
+          <h3 className="font-semibold text-gray-800 mb-4">Progression de Force</h3>
           <div className="h-40 bg-gray-50 rounded-lg flex items-center justify-center text-gray-500">
             <div className="text-center">
               <TrendingUp className="h-8 w-8 mx-auto mb-2" />
-              <div className="font-medium">Progress Chart</div>
-              <div className="text-sm">Your strength gains over time</div>
+              <div className="font-medium">Graphique de Progression</div>
+              <div className="text-sm">Vos gains de force au fil du temps</div>
             </div>
           </div>
         </Card>
@@ -161,20 +161,20 @@ export default function Progress() {
         {/* Personal Records */}
         {topRecords.length > 0 && (
           <Card className="shadow-sm p-4 mb-6">
-            <h3 className="font-semibold text-gray-800 mb-4">Personal Records</h3>
+            <h3 className="font-semibold text-gray-800 mb-4">Records Personnels</h3>
             <div className="space-y-3">
               {topRecords.map((record) => (
                 <div key={record.id} className="flex items-center justify-between">
                   <div>
                     <div className="font-medium">{getExerciseName(record.exerciseId)}</div>
                     <div className="text-sm text-gray-500">
-                      Set {formatDate(record.achievedAt)}
+                      Établi {formatDate(record.achievedAt)}
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="font-bold text-blue-600">{record.weight} lbs</div>
+                    <div className="font-bold text-blue-600">{record.weight} kg</div>
                     <div className="text-sm text-green-600">
-                      {record.reps} reps
+                      {record.reps} rép
                     </div>
                   </div>
                 </div>
@@ -186,7 +186,7 @@ export default function Progress() {
         {/* Recent Workouts */}
         {recentSessions.length > 0 && (
           <Card className="shadow-sm p-4 mb-20">
-            <h3 className="font-semibold text-gray-800 mb-4">Recent Workouts</h3>
+            <h3 className="font-semibold text-gray-800 mb-4">Entraînements Récents</h3>
             <div className="space-y-3">
               {recentSessions.map((session) => (
                 <div
@@ -201,7 +201,7 @@ export default function Progress() {
                   </div>
                   <div className="text-right">
                     <Badge variant="outline" className="text-green-600 border-green-600">
-                      Completed
+                      Terminé
                     </Badge>
                     <div className="text-xs text-gray-500 mt-1">
                       {session.endTime && formatDuration(session.startTime, session.endTime)}
@@ -218,13 +218,13 @@ export default function Progress() {
           <Card className="shadow-sm p-8 text-center">
             <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-800 mb-2">
-              No progress data yet
+              Aucune donnée de progression
             </h3>
             <p className="text-gray-600 mb-4">
-              Complete your first workout to start tracking your progress!
+              Terminez votre premier entraînement pour commencer à suivre vos progrès !
             </p>
             <Button onClick={() => setLocation("/workouts")}>
-              Start Your First Workout
+              Commencer votre premier entraînement
             </Button>
           </Card>
         )}

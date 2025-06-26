@@ -128,6 +128,7 @@ Changelog:
 - June 26, 2025. Initial setup
 - June 26, 2025. Added demo mode feature with toggle switch, data protection, and visual indicators
 - June 26, 2025. Implemented RPE-based intelligent workout suggestions system with performance analysis
+- June 26, 2025. Complete French localization with metric system (kg) adaptation and RPE input bug fix
 ```
 
 ## User Preferences
