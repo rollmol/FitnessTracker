@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useLocation } from "wouter";
 import { Bell, Settings, Play, Dumbbell, ChartLine, Trophy, History } from "lucide-react";
+import DemoModeToggle from "@/components/DemoModeToggle";
+import { useDemoMode } from "@/hooks/useDemoMode";
 
 // Mock user ID for demo - in real app this would come from auth
 const MOCK_USER_ID = 1;
@@ -27,6 +29,7 @@ interface WorkoutProgram {
 
 export default function Dashboard() {
   const [, setLocation] = useLocation();
+  const { isDemoMode, toggleDemoMode } = useDemoMode();
 
   const { data: stats } = useQuery<UserStats>({
     queryKey: [`/api/users/${MOCK_USER_ID}/stats`],
@@ -58,6 +61,11 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Demo Mode Toggle */}
+      <div className="p-6 pb-0">
+        <DemoModeToggle isDemoMode={isDemoMode} onToggle={toggleDemoMode} />
+      </div>
+      
       {/* Header with gradient */}
       <div className="gradient-primary text-white p-6 pb-8">
         <div className="flex items-center justify-between mb-4">

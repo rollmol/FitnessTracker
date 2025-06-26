@@ -40,6 +40,12 @@ This is a modern fitness tracking application designed as a Progressive Web App 
 **User Badges**: User-specific badge progress tracking
 **Personal Records**: Individual exercise PR tracking
 
+### Demo Mode System
+**Demo Mode Toggle**: Allows users to switch between real and test mode
+**Data Protection**: Prevents test data from affecting real statistics
+**Visual Indicators**: Clear UI indication when in demo mode
+**Local Storage**: Preserves demo mode preference across sessions
+
 ### Authentication & User Management
 - User creation and profile management
 - XP and level progression system
@@ -113,6 +119,7 @@ This is a modern fitness tracking application designed as a Progressive Web App 
 ```
 Changelog:
 - June 26, 2025. Initial setup
+- June 26, 2025. Added demo mode feature with toggle switch, data protection, and visual indicators
 ```
 
 ## User Preferences

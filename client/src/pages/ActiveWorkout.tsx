@@ -8,6 +8,7 @@ import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import RestTimer from "@/components/RestTimer";
+import { useDemoMode } from "@/hooks/useDemoMode";
 import { Pause, X, Check, ArrowLeft, ArrowRight } from "lucide-react";
 
 // Mock user ID for demo
@@ -48,6 +49,7 @@ export default function ActiveWorkout() {
   const [location, setLocation] = useLocation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { isDemoMode } = useDemoMode();
   
   // Extract program ID from URL path (/workout/1 -> get "1")
   const programId = parseInt(location.split('/').pop() || '1');
@@ -84,23 +86,34 @@ export default function ActiveWorkout() {
 
   // Save workout set
   const saveSetMutation = useMutation({
-    mutationFn: (data: any) => apiRequest("POST", "/api/workout-sets", data),
+    mutationFn: (data: any) => {
+      if (isDemoMode) {
+        // In demo mode, simulate API call without saving
+        return Promise.resolve(new Response('{}', { status: 200 }));
+      }
+      return apiRequest("POST", "/api/workout-sets", data);
+    },
     onSuccess: () => {
       toast({
-        title: "Set completed!",
-        description: "Great work! Keep it up.",
+        title: isDemoMode ? "Set completed! (Mode démo)" : "Set completed!",
+        description: isDemoMode ? "Données de test - non sauvegardées" : "Great work! Keep it up.",
       });
     },
   });
 
   // Complete workout session
   const completeSessionMutation = useMutation({
-    mutationFn: ({ id, updates }: { id: number; updates: any }) =>
-      apiRequest("PUT", `/api/workout-sessions/${id}`, updates),
+    mutationFn: ({ id, updates }: { id: number; updates: any }) => {
+      if (isDemoMode) {
+        // In demo mode, simulate API call without saving
+        return Promise.resolve(new Response('{}', { status: 200 }));
+      }
+      return apiRequest("PUT", `/api/workout-sessions/${id}`, updates);
+    },
     onSuccess: () => {
       toast({
-        title: "Workout completed!",
-        description: "Excellent work! You crushed it!",
+        title: isDemoMode ? "Séance terminée! (Mode démo)" : "Workout completed!",
+        description: isDemoMode ? "Données de test - non sauvegardées" : "Excellent work! You crushed it!",
       });
       setLocation("/");
     },
@@ -262,6 +275,13 @@ export default function ActiveWorkout() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Demo Mode Indicator */}
+      {isDemoMode && (
+        <div className="bg-orange-500 text-white text-center py-2 text-sm font-medium">
+          🧪 MODE DÉMO - Les données ne seront pas sauvegardées
+        </div>
+      )}
+      
       {/* Header with progress */}
       <div className="gradient-primary text-white px-6 py-4">
         <div className="flex items-center justify-between mb-2">
