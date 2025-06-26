@@ -200,9 +200,14 @@ export default function ActiveWorkout() {
 
     setWorkoutSets([...workoutSets, newSet]);
 
+    // Reset RPE for next set/exercise
+    setCurrentRPE([0]);
+    
     // Check if this is the last set of the exercise
     if (currentSetIndex < totalSets - 1) {
       setCurrentSetIndex(currentSetIndex + 1);
+      setCurrentWeight("");
+      setCurrentReps("");
       setIsResting(true);
       setRestDuration(currentExercise.restTime);
     } else {
@@ -414,35 +419,58 @@ export default function ActiveWorkout() {
           <Button
             className="w-full gradient-secondary text-white font-semibold py-3 mb-4"
             onClick={handleCompleteSet}
-            disabled={!currentWeight || !currentReps || saveSetMutation.isPending}
+            disabled={!currentWeight || !currentReps || currentRPE[0] === 0 || saveSetMutation.isPending}
           >
-            {saveSetMutation.isPending ? "Saving..." : "Complete Set"}
+            {saveSetMutation.isPending ? "Sauvegarde..." : currentRPE[0] === 0 ? "Saisissez le RPE pour continuer" : "Valider la série"}
           </Button>
 
           {/* RPE Rating */}
-          <Card className="bg-gray-50 p-4">
-            <h3 className="font-semibold mb-3">Rate of Perceived Exertion (RPE)</h3>
+          <Card className={`p-4 transition-colors ${currentRPE[0] === 0 ? 'bg-orange-50 border-orange-200' : 'bg-gray-50'}`}>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold">Rate of Perceived Exertion (RPE)</h3>
+              {currentRPE[0] === 0 && (
+                <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
+                  Requis
+                </span>
+              )}
+            </div>
+            
+            {currentRPE[0] === 0 && (
+              <p className="text-sm text-orange-700 mb-3">
+                Évaluez la difficulté de cette série pour continuer
+              </p>
+            )}
+            
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-gray-600">Easy</span>
-              <span className="text-sm text-gray-600">Max Effort</span>
+              <span className="text-sm text-gray-600">Facile</span>
+              <span className="text-sm text-gray-600">Maximum</span>
             </div>
             <Slider
               value={currentRPE}
               onValueChange={setCurrentRPE}
               max={10}
-              min={1}
+              min={0}
               step={1}
               className="w-full mb-2"
             />
             <div className="flex justify-between text-xs text-gray-500 mb-2">
-              {Array.from({ length: 10 }, (_, i) => (
-                <span key={i}>{i + 1}</span>
+              {Array.from({ length:11 }, (_, i) => (
+                <span key={i} className={i === 0 ? 'text-transparent' : ''}>{i}</span>
               ))}
             </div>
             <div className="text-center">
-              <span className="text-lg font-bold text-blue-600">
-                RPE: {currentRPE[0]}
+              <span className={`text-lg font-bold ${currentRPE[0] === 0 ? 'text-orange-600' : 'text-blue-600'}`}>
+                {currentRPE[0] === 0 ? 'Sélectionnez un RPE' : `RPE: ${currentRPE[0]}/10`}
               </span>
+              {currentRPE[0] > 0 && (
+                <div className="text-sm text-gray-600 mt-1">
+                  {currentRPE[0] <= 6 && 'Léger - Vous pourriez faire plus'}
+                  {currentRPE[0] === 7 && 'Modéré - Encore quelques répétitions possibles'}
+                  {currentRPE[0] === 8 && 'Difficile - 2-3 répétitions en réserve'}
+                  {currentRPE[0] === 9 && 'Très difficile - 1 répétition en réserve'}
+                  {currentRPE[0] === 10 && 'Maximum - Impossible de faire plus'}
+                </div>
+              )}
             </div>
           </Card>
         </Card>
