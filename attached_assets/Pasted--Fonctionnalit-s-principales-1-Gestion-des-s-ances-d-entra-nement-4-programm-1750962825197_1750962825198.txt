@@ -1,0 +1,109 @@
+## 🚀 **Fonctionnalités principales**
+
+### **1. Gestion des séances d’entraînement**
+
+- **4 programmes prédéfinis** : Upper A (Force), Lower A (Force), Upper B (Volume), Lower B (Explosivité)
+- **Exercices intégrés** : 11 exercices avec paramètres (poids, répétitions, temps de repos)
+- **Timer de repos automatique** avec notifications
+- **Système RPE** (Rate of Perceived Exertion) pour mesurer l’intensité
+- **Auto-chargement des poids** basé sur l’historique
+- **Sauvegarde automatique** des performances
+
+### **2. Système de gamification**
+
+- **Badges** : 5+ badges à débloquer (premier pas, régularité, etc.)
+- **Système XP** avec niveaux
+- **Notifications de récompenses**
+- **Progression visuelle**
+
+### **3. Intelligence artificielle**
+
+- **Prédictions de progression** (activée après 3 séances)
+- **Recommandations personnalisées**
+- **Détection de plateaux**
+- **Conseils basés sur l’analyse RPE**
+
+### **4. Notifications intelligentes**
+
+- **Notifications en temps réel** pendant les séances
+- **Rappels d’hydratation**
+- **Messages motivationnels**
+- **Notifications de badges**
+- **Alertes de repos**
+
+### **5. Gestion des données**
+
+- **Export/Import** des données
+- **Historique complet** des séances
+- **Synchronisation** entre appareils
+- **Nettoyage automatique** des doublons
+
+## 📱 **Parcours utilisateur**
+
+### **Phase 1 : Onboarding**
+
+1. **Écran de chargement** avec vérification du système
+1. **Détection utilisateur** :
+- Nouvel utilisateur → Setup
+- Utilisateur existant → Dashboard
+1. **Setup initial** :
+- Saisie informations personnelles
+- Option d’import de données existantes
+- Choix : “Importer historique” ou “Commencer fresh”
+
+### **Phase 2 : Dashboard principal**
+
+```
+🏠 Dashboard
+├── Header avec salutation personnalisée
+├── Séance du jour (si programmée)
+├── Actions rapides :
+│   ├── 💪 Démarrer séance
+│   ├── 📊 Progression
+│   ├── 🏆 Badges
+│   └── 🔔 Notifications
+├── Section IA (après 3 séances)
+└── Paramètres et export
+```
+
+### **Phase 3 : Séance d’entraînement**
+
+1. **Sélection du programme** (selon jour de la semaine)
+1. **Écran d’entraînement** :
+- Navigation entre exercices
+- Saisie poids/répétitions
+- Timer de repos automatique
+- Saisie RPE après chaque série
+- Messages motivationnels
+1. **Finalisation** avec analyse de la séance
+
+### **Phase 4 : Navigation entre écrans**
+
+```
+Dashboard (central) ←→ Screens disponibles :
+├── 🏋️‍♂️ WorkoutScreen (séance active)
+├── 📈 ProgressionScreen (historique/stats)
+├── 🏆 BadgesScreen (gamification)
+├── 🔔 NotificationCenterScreen (alertes)
+├── 📝 ExercisesScreen (base d'exercices)
+├── 📚 HistoryScreen (séances passées)
+├── 🤖 AIPredictionsScreen (IA)
+└── ⚙️ SetupScreen/Settings (configuration)
+```
+
+### **Phase 5 : Fonctionnalités avancées**
+
+- **Analyse IA** : Recommandations basées sur la progression
+- **Partage social** : Export des performances
+- **Gestion avancée** : Import/export, nettoyage des données
+- **Personnalisation** : Paramètres notifications et préférences
+
+## 🎯 **Points clés du workflow**
+
+1. **Progressivité** : L’app s’adapte selon le nombre de séances (IA activée à 3+)
+1. **Automation** : Auto-chargement des poids, timers automatiques
+1. **Gamification** : Système de récompenses pour maintenir la motivation
+1. **Intelligence** : Analyse RPE et recommandations personnalisées
+1. **Flexibilité** : Import/export pour migration de données
+
+L’application suit une approche **mobile-first** avec une navigation intuitive et des fonctionnalités qui s’activent progressivement selon l’utilisation de l’utilisateur.​​​​​​​​​​​​​​​​
