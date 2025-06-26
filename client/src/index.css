@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(147, 61%, 54%);
+  --secondary-foreground: hsl(147, 61%, 10%);
+  --accent: hsl(45, 93%, 47%);
+  --accent-foreground: hsl(45, 93%, 10%);
+  --success: hsl(84, 81%, 44%);
+  --success-foreground: hsl(84, 81%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(147, 61%, 54%);
+  --secondary-foreground: hsl(147, 61%, 10%);
+  --accent: hsl(45, 93%, 47%);
+  --accent-foreground: hsl(45, 93%, 10%);
+  --success: hsl(84, 81%, 44%);
+  --success-foreground: hsl(84, 81%, 10%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* Custom styles for mobile app */
+.mobile-container {
+  max-width: 28rem;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-bar {
+  background: hsl(240, 10%, 3.9%);
+  color: white;
+  font-size: 0.75rem;
+  padding: 0.25rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gradient-primary {
+  background: linear-gradient(to right, hsl(207, 90%, 54%), hsl(207, 90%, 44%));
+}
+
+.gradient-secondary {
+  background: linear-gradient(to bottom right, hsl(147, 61%, 54%), hsl(147, 61%, 44%));
+}
+
+.gradient-accent {
+  background: linear-gradient(to bottom right, hsl(45, 93%, 47%), hsl(45, 93%, 37%));
+}
+
+.gradient-success {
+  background: linear-gradient(to bottom right, hsl(84, 81%, 44%), hsl(84, 81%, 34%));
+}
+
+.gradient-purple {
+  background: linear-gradient(to right, hsl(271, 81%, 56%), hsl(312, 73%, 55%));
+}
+
+.rest-timer-animation {
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+/* Bottom navigation styling */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 28rem;
+  background: white;
+  border-top: 1px solid hsl(20, 5.9%, 90%);
+  z-index: 50;
+}
+
+/* Screen transitions */
+.screen-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Custom scrollbar for mobile */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(60, 4.8%, 95.9%);
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(25, 5.3%, 44.7%);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(20, 14.3%, 4.1%);
+}
