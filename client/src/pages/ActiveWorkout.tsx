@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRoute, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,12 +45,12 @@ interface WorkoutSession {
 }
 
 export default function ActiveWorkout() {
-  const [match] = useRoute("/workout/:id");
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
   
-  const programId = match?.id ? parseInt(match.id) : 0;
+  // Extract program ID from URL path (/workout/1 -> get "1")
+  const programId = parseInt(location.split('/').pop() || '1');
   
   const [currentExerciseIndex, setCurrentExerciseIndex] = useState(0);
   const [currentSetIndex, setCurrentSetIndex] = useState(0);
