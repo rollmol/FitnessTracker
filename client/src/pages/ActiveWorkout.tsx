@@ -318,7 +318,7 @@ export default function ActiveWorkout() {
           />
         </div>
         <div className="flex justify-between text-sm text-blue-100">
-          <span>Exercise {currentExerciseIndex + 1} of {workoutExercises.length}</span>
+          <span>Exercice {currentExerciseIndex + 1} sur {workoutExercises.length}</span>
           <span>{timeDisplay}</span>
         </div>
       </div>
@@ -371,13 +371,13 @@ export default function ActiveWorkout() {
                   }`}
                 >
                   <span className={`font-medium ${isCurrent ? "text-blue-600" : "text-gray-800"}`}>
-                    Set {index + 1} {isCurrent && "(Current)"}
+                    Série {index + 1} {isCurrent && "(Actuelle)"}
                   </span>
                   <div className="flex items-center space-x-4">
                     <div className="flex items-center space-x-2">
                       <Input
                         type="number"
-                        placeholder="Weight"
+                        placeholder="Poids"
                         value={isCurrent ? currentWeight : completedSet?.weight || ""}
                         onChange={(e) => isCurrent && setCurrentWeight(e.target.value)}
                         className={`w-16 text-center text-sm ${
@@ -385,12 +385,12 @@ export default function ActiveWorkout() {
                         }`}
                         disabled={!isCurrent}
                       />
-                      <span className="text-sm text-gray-500">lbs</span>
+                      <span className="text-sm text-gray-500">kg</span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Input
                         type="number"
-                        placeholder="Reps"
+                        placeholder="Rép"
                         value={isCurrent ? currentReps : completedSet?.reps || ""}
                         onChange={(e) => isCurrent && setCurrentReps(e.target.value)}
                         className={`w-12 text-center text-sm ${
@@ -483,14 +483,14 @@ export default function ActiveWorkout() {
             onClick={handlePreviousExercise}
             disabled={currentExerciseIndex === 0}
           >
-            <ArrowLeft className="mr-2 h-4 w-4" /> Previous
+            <ArrowLeft className="mr-2 h-4 w-4" /> Précédent
           </Button>
           <Button
             className="flex-1 gradient-primary text-white py-3"
             onClick={handleNextExercise}
             disabled={currentExerciseIndex === workoutExercises.length - 1}
           >
-            Next <ArrowRight className="ml-2 h-4 w-4" />
+            Suivant <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </div>

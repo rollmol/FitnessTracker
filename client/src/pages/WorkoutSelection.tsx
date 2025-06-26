@@ -24,19 +24,19 @@ export default function WorkoutSelection() {
   const getIntensityLabel = (type: string) => {
     switch (type) {
       case "force":
-        return "High intensity";
+        return "Intensité élevée";
       case "volume":
-        return "Medium intensity";
+        return "Intensité moyenne";
       case "explosivity":
-        return "Very high intensity";
+        return "Intensité très élevée";
       default:
-        return "Medium intensity";
+        return "Intensité moyenne";
     }
   };
 
   const getDayLabel = (index: number) => {
-    const days = ["Today", "Tomorrow", "Wed", "Thu"];
-    return days[index] || "Available";
+    const days = ["Aujourd'hui", "Demain", "Mer", "Jeu"];
+    return days[index] || "Disponible";
   };
 
   const getIntensityColor = (type: string) => {
@@ -57,7 +57,7 @@ export default function WorkoutSelection() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading workouts...</p>
+          <p className="text-gray-600">Chargement des entraînements...</p>
         </div>
       </div>
     );
@@ -75,7 +75,7 @@ export default function WorkoutSelection() {
         >
           <ArrowLeft className="h-5 w-5 text-gray-600" />
         </Button>
-        <h1 className="text-xl font-semibold">Choose Workout</h1>
+        <h1 className="text-xl font-semibold">Choisir un entraînement</h1>
       </div>
 
       {/* Workout Programs */}

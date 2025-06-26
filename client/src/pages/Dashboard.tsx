@@ -52,9 +52,9 @@ export default function Dashboard() {
 
   const getTimeBasedGreeting = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return "Good morning";
-    if (hour < 17) return "Good afternoon";
-    return "Good evening";
+    if (hour < 12) return "Bonjour";
+    if (hour < 17) return "Bon après-midi";
+    return "Bonsoir";
   };
 
   const recentBadges = userBadges?.slice(-3) || [];
@@ -73,7 +73,7 @@ export default function Dashboard() {
             <h1 className="text-2xl font-bold">
               {getTimeBasedGreeting()}, Alex!
             </h1>
-            <p className="text-blue-100 text-sm">Ready to crush your workout?</p>
+            <p className="text-blue-100 text-sm">Prêt à dominer votre entraînement ?</p>
           </div>
           <div className="flex space-x-3">
             <Button
@@ -106,14 +106,14 @@ export default function Dashboard() {
                 <div>
                   <h3 className="font-semibold text-lg">{todaysWorkout.name}</h3>
                   <p className="text-blue-100 text-sm">
-                    6 exercises • {todaysWorkout.estimatedDuration}-{todaysWorkout.estimatedDuration + 15} min
+                    6 exercices • {todaysWorkout.estimatedDuration}-{todaysWorkout.estimatedDuration + 15} min
                   </p>
                 </div>
                 <Button
                   className="bg-orange-500 hover:bg-orange-600 text-white"
                   onClick={() => setLocation(`/workout/${todaysWorkout.id}`)}
                 >
-                  Start <Play className="ml-2 h-4 w-4" />
+                  Commencer <Play className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </div>
@@ -130,13 +130,13 @@ export default function Dashboard() {
                 <div className="text-2xl font-bold text-blue-600">
                   {stats?.weeklyWorkouts || 0}
                 </div>
-                <div className="text-xs text-gray-500">This Week</div>
+                <div className="text-xs text-gray-500">Cette semaine</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
                   {stats?.currentStreak || 0}
                 </div>
-                <div className="text-xs text-gray-500">Day Streak</div>
+                <div className="text-xs text-gray-500">Série</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-orange-500">
@@ -151,7 +151,7 @@ export default function Dashboard() {
 
       {/* Quick Actions */}
       <div className="px-6 mb-6">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h2>
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Actions rapides</h2>
         <div className="grid grid-cols-2 gap-4">
           <Card
             className="shadow-sm cursor-pointer hover:shadow-md transition-shadow"
@@ -161,8 +161,8 @@ export default function Dashboard() {
               <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-3">
                 <Dumbbell className="text-blue-600 h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-gray-800">Start Workout</h3>
-              <p className="text-sm text-gray-500">Choose your program</p>
+              <h3 className="font-semibold text-gray-800">Commencer l'entraînement</h3>
+              <p className="text-sm text-gray-500">Choisissez votre programme</p>
             </div>
           </Card>
 
@@ -174,8 +174,8 @@ export default function Dashboard() {
               <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mb-3">
                 <ChartLine className="text-green-600 h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-gray-800">Progress</h3>
-              <p className="text-sm text-gray-500">Track your gains</p>
+              <h3 className="font-semibold text-gray-800">Progrès</h3>
+              <p className="text-sm text-gray-500">Suivez vos gains</p>
             </div>
           </Card>
 
@@ -188,7 +188,7 @@ export default function Dashboard() {
                 <Trophy className="text-orange-500 h-6 w-6" />
               </div>
               <h3 className="font-semibold text-gray-800">Badges</h3>
-              <p className="text-sm text-gray-500">View achievements</p>
+              <p className="text-sm text-gray-500">Voir les réussites</p>
             </div>
           </Card>
 
@@ -197,8 +197,8 @@ export default function Dashboard() {
               <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-3">
                 <History className="text-purple-500 h-6 w-6" />
               </div>
-              <h3 className="font-semibold text-gray-800">History</h3>
-              <p className="text-sm text-gray-500">Past workouts</p>
+              <h3 className="font-semibold text-gray-800">Historique</h3>
+              <p className="text-sm text-gray-500">Entraînements passés</p>
             </div>
           </Card>
         </div>

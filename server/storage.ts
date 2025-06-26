@@ -71,17 +71,17 @@ export class MemStorage implements IStorage {
   private initializeData() {
     // Initialize default exercises
     const defaultExercises: Omit<Exercise, 'id'>[] = [
-      { name: "Bench Press", description: "Chest compound movement", muscleGroups: ["chest", "triceps", "shoulders"], instructions: "Keep your core tight and control the descent", restTime: 180 },
-      { name: "Squat", description: "Lower body compound movement", muscleGroups: ["quadriceps", "glutes", "hamstrings"], instructions: "Keep your knees tracking over your toes", restTime: 180 },
-      { name: "Deadlift", description: "Full body compound movement", muscleGroups: ["hamstrings", "glutes", "back"], instructions: "Keep the bar close to your body", restTime: 240 },
-      { name: "Overhead Press", description: "Shoulder compound movement", muscleGroups: ["shoulders", "triceps", "core"], instructions: "Keep your core braced throughout", restTime: 150 },
-      { name: "Barbell Row", description: "Back compound movement", muscleGroups: ["back", "biceps"], instructions: "Pull to your lower chest", restTime: 150 },
-      { name: "Pull-ups", description: "Upper body bodyweight exercise", muscleGroups: ["back", "biceps"], instructions: "Full range of motion", restTime: 120 },
-      { name: "Dips", description: "Triceps compound movement", muscleGroups: ["triceps", "chest", "shoulders"], instructions: "Lower until shoulders are below elbows", restTime: 120 },
-      { name: "Romanian Deadlift", description: "Hamstring focused movement", muscleGroups: ["hamstrings", "glutes"], instructions: "Focus on hip hinge movement", restTime: 150 },
-      { name: "Incline Bench Press", description: "Upper chest movement", muscleGroups: ["chest", "triceps", "shoulders"], instructions: "45 degree incline", restTime: 180 },
-      { name: "Box Jumps", description: "Plyometric exercise", muscleGroups: ["quadriceps", "glutes", "calves"], instructions: "Land softly on the box", restTime: 90 },
-      { name: "Bulgarian Split Squats", description: "Single leg strength", muscleGroups: ["quadriceps", "glutes"], instructions: "Keep most weight on front leg", restTime: 120 }
+      { name: "Développé couché", description: "Mouvement composé pour les pectoraux", muscleGroups: ["pectoraux", "triceps", "épaules"], instructions: "Gardez votre core serré et contrôlez la descente", restTime: 180 },
+      { name: "Squat", description: "Mouvement composé pour le bas du corps", muscleGroups: ["quadriceps", "fessiers", "ischio-jambiers"], instructions: "Gardez vos genoux alignés avec vos orteils", restTime: 180 },
+      { name: "Soulevé de terre", description: "Mouvement composé corps entier", muscleGroups: ["ischio-jambiers", "fessiers", "dos"], instructions: "Gardez la barre près de votre corps", restTime: 240 },
+      { name: "Développé militaire", description: "Mouvement composé pour les épaules", muscleGroups: ["épaules", "triceps", "core"], instructions: "Gardez votre core contracté", restTime: 150 },
+      { name: "Rowing barre", description: "Mouvement composé pour le dos", muscleGroups: ["dos", "biceps"], instructions: "Tirez vers la poitrine basse", restTime: 150 },
+      { name: "Tractions", description: "Exercice au poids du corps", muscleGroups: ["dos", "biceps"], instructions: "Amplitude complète de mouvement", restTime: 120 },
+      { name: "Dips", description: "Mouvement composé pour les triceps", muscleGroups: ["triceps", "pectoraux", "épaules"], instructions: "Descendez jusqu'à ce que les épaules soient sous les coudes", restTime: 120 },
+      { name: "Soulevé de terre roumain", description: "Mouvement ciblant les ischio-jambiers", muscleGroups: ["ischio-jambiers", "fessiers"], instructions: "Concentrez-vous sur la flexion de hanche", restTime: 150 },
+      { name: "Développé incliné", description: "Mouvement pour le haut des pectoraux", muscleGroups: ["pectoraux", "triceps", "épaules"], instructions: "Inclinaison à 45 degrés", restTime: 180 },
+      { name: "Box jumps", description: "Exercice pliométrique", muscleGroups: ["quadriceps", "fessiers", "mollets"], instructions: "Atterrissez en douceur sur la boîte", restTime: 90 },
+      { name: "Fentes bulgares", description: "Force sur une jambe", muscleGroups: ["quadriceps", "fessiers"], instructions: "Gardez le poids sur la jambe avant", restTime: 120 }
     ];
 
     defaultExercises.forEach(exercise => {
@@ -92,34 +92,34 @@ export class MemStorage implements IStorage {
     // Initialize workout programs
     const defaultPrograms: Omit<WorkoutProgram, 'id'>[] = [
       {
-        name: "Upper A - Force",
-        description: "Focus on compound movements with heavy weights. Build maximum strength.",
+        name: "Haut du corps A - Force",
+        description: "Focus sur les mouvements composés avec charges lourdes. Développement de la force maximale.",
         type: "force",
-        targetMuscles: "Upper body",
+        targetMuscles: "Haut du corps",
         estimatedDuration: 50,
         exercises: ["1", "4", "5", "6", "7", "9"] // Bench, OHP, Row, Pull-ups, Dips, Incline
       },
       {
-        name: "Lower A - Force", 
-        description: "Heavy squats and deadlifts. Maximum lower body strength development.",
+        name: "Bas du corps A - Force", 
+        description: "Squats et soulevés de terre lourds. Développement maximal de la force du bas du corps.",
         type: "force",
-        targetMuscles: "Lower body",
+        targetMuscles: "Bas du corps",
         estimatedDuration: 55,
         exercises: ["2", "3", "8", "11"] // Squat, Deadlift, RDL, Bulgarian Split
       },
       {
-        name: "Upper B - Volume",
-        description: "Higher rep ranges for muscle growth and endurance. Pump focused.",
+        name: "Haut du corps B - Volume",
+        description: "Séries plus longues pour la croissance musculaire et l'endurance. Focus congestion.",
         type: "volume", 
-        targetMuscles: "Upper body",
+        targetMuscles: "Haut du corps",
         estimatedDuration: 65,
         exercises: ["1", "4", "5", "6", "7", "9"] // Same as Upper A but different rep ranges
       },
       {
-        name: "Lower B - Explosivity",
-        description: "Power and speed focused. Plyometrics and explosive movements.",
+        name: "Bas du corps B - Explosivité",
+        description: "Focus sur la puissance et la vitesse. Pliométrie et mouvements explosifs.",
         type: "explosivity",
-        targetMuscles: "Lower body", 
+        targetMuscles: "Bas du corps", 
         estimatedDuration: 45,
         exercises: ["2", "10", "11", "8"] // Squat, Box Jumps, Bulgarian Split, RDL
       }
@@ -132,12 +132,12 @@ export class MemStorage implements IStorage {
 
     // Initialize badges
     const defaultBadges: Omit<Badge, 'id'>[] = [
-      { name: "First Steps", description: "Complete your first workout", icon: "dumbbell", criteria: "complete_first_workout", xpReward: 50 },
-      { name: "Week Warrior", description: "Complete 4 workouts in a week", icon: "fire", criteria: "4_workouts_week", xpReward: 100 },
-      { name: "Consistent", description: "Maintain a 10 day streak", icon: "medal", criteria: "10_day_streak", xpReward: 150 },
-      { name: "Goal Getter", description: "Set a new personal record", icon: "target", criteria: "new_personal_record", xpReward: 75 },
-      { name: "Progress", description: "Track 20 workouts", icon: "chart-line", criteria: "20_workouts_tracked", xpReward: 125 },
-      { name: "Strong", description: "Lift 1000+ lbs total in one session", icon: "trophy", criteria: "1000_lbs_session", xpReward: 200 }
+      { name: "Premiers pas", description: "Complétez votre premier entraînement", icon: "dumbbell", criteria: "complete_first_workout", xpReward: 50 },
+      { name: "Guerrier de la semaine", description: "Complétez 4 entraînements en une semaine", icon: "fire", criteria: "4_workouts_week", xpReward: 100 },
+      { name: "Régulier", description: "Maintenez une série de 10 jours", icon: "medal", criteria: "10_day_streak", xpReward: 150 },
+      { name: "Atteigneur d'objectifs", description: "Établissez un nouveau record personnel", icon: "target", criteria: "new_personal_record", xpReward: 75 },
+      { name: "Progrès", description: "Suivez 20 entraînements", icon: "chart-line", criteria: "20_workouts_tracked", xpReward: 125 },
+      { name: "Fort", description: "Soulevez plus de 450kg au total en une séance", icon: "trophy", criteria: "450kg_session", xpReward: 200 }
     ];
 
     defaultBadges.forEach(badge => {
@@ -207,8 +207,9 @@ export class MemStorage implements IStorage {
   // Workout Session methods
   async createWorkoutSession(insertSession: InsertWorkoutSession): Promise<WorkoutSession> {
     const session: WorkoutSession = {
-      ...insertSession,
       id: this.currentSessionId++,
+      userId: insertSession.userId || null,
+      programId: insertSession.programId || null,
       startTime: new Date(),
       endTime: null,
       status: "active",
@@ -239,8 +240,14 @@ export class MemStorage implements IStorage {
   // Workout Set methods
   async createWorkoutSet(insertSet: InsertWorkoutSet): Promise<WorkoutSet> {
     const set: WorkoutSet = {
-      ...insertSet,
       id: this.currentSetId++,
+      sessionId: insertSet.sessionId || null,
+      exerciseId: insertSet.exerciseId || null,
+      setNumber: insertSet.setNumber || null,
+      weight: insertSet.weight || null,
+      reps: insertSet.reps || null,
+      rpe: insertSet.rpe || null,
+      restTime: insertSet.restTime || null,
       completedAt: new Date()
     };
     this.workoutSets.set(set.id, set);
@@ -278,8 +285,12 @@ export class MemStorage implements IStorage {
 
   async createPersonalRecord(insertRecord: InsertPersonalRecord): Promise<PersonalRecord> {
     const record: PersonalRecord = {
-      ...insertRecord,
       id: this.currentRecordId++,
+      userId: insertRecord.userId || null,
+      exerciseId: insertRecord.exerciseId || null,
+      weight: insertRecord.weight || null,
+      reps: insertRecord.reps || null,
+      recordType: "max",
       achievedAt: new Date()
     };
     this.personalRecords.set(record.id, record);

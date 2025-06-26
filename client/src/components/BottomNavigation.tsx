@@ -6,10 +6,10 @@ export default function BottomNavigation() {
   const [location, setLocation] = useLocation();
 
   const navItems = [
-    { path: "/", icon: Home, label: "Home" },
-    { path: "/workouts", icon: Dumbbell, label: "Workouts" },
-    { path: "/progress", icon: ChartLine, label: "Progress" },
-    { path: "/badges", icon: User, label: "Profile" }, // Using badges as profile for now
+    { path: "/", icon: Home, label: "Accueil" },
+    { path: "/workouts", icon: Dumbbell, label: "Entraînements" },
+    { path: "/progress", icon: ChartLine, label: "Progrès" },
+    { path: "/badges", icon: User, label: "Profil" }, // Using badges as profile for now
   ];
 
   return (
