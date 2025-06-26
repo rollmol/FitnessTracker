@@ -8,6 +8,7 @@ import { Slider } from "@/components/ui/slider";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import RestTimer from "@/components/RestTimer";
+import RPESuggestions from "@/components/RPESuggestions";
 import { useDemoMode } from "@/hooks/useDemoMode";
 import { Pause, X, Check, ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -328,6 +329,18 @@ export default function ActiveWorkout() {
 
       {/* Current Exercise */}
       <div className="p-6">
+        {/* RPE-based Suggestions */}
+        <div className="mb-6">
+          <RPESuggestions
+            userId={1}
+            exerciseId={currentExercise.id}
+            exerciseName={currentExercise.name}
+            lastWeight={completedSets.length > 0 ? completedSets[completedSets.length - 1].weight : undefined}
+            lastReps={completedSets.length > 0 ? completedSets[completedSets.length - 1].reps : undefined}
+            lastRestTime={currentExercise.restTime}
+          />
+        </div>
+
         <Card className="shadow-sm p-6 mb-6">
           <div className="text-center mb-6">
             <h2 className="text-2xl font-bold mb-2">{currentExercise.name}</h2>

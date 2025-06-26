@@ -244,7 +244,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json(stats);
     } catch (error) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: (error as Error).message });
+    }
+  });
+
+  // Get exercise history for RPE-based suggestions
+  app.get("/api/users/:userId/exercises/:exerciseId/history", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      const exerciseId = parseInt(req.params.exerciseId);
+      const limit = parseInt(req.query.limit as string) || 10;
+      
+      const history = await storage.getUserExerciseHistory(userId, exerciseId, limit);
+      res.json(history);
+    } catch (error) {
+      console.error("Error fetching exercise history:", error);
+      res.status(500).json({ error: "Failed to fetch exercise history" });
     }
   });
 

@@ -40,6 +40,9 @@ export interface IStorage {
   getUserPersonalRecords(userId: number): Promise<PersonalRecord[]>;
   createPersonalRecord(record: InsertPersonalRecord): Promise<PersonalRecord>;
   getExercisePersonalRecord(userId: number, exerciseId: number): Promise<PersonalRecord | undefined>;
+  
+  // Exercise History
+  getUserExerciseHistory(userId: number, exerciseId: number, limit?: number): Promise<WorkoutSet[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -287,6 +290,24 @@ export class MemStorage implements IStorage {
     return Array.from(this.personalRecords.values()).find(
       record => record.userId === userId && record.exerciseId === exerciseId
     );
+  }
+
+  async getUserExerciseHistory(userId: number, exerciseId: number, limit: number = 10): Promise<WorkoutSet[]> {
+    // Get user's workout sessions
+    const userSessions = Array.from(this.workoutSessions.values())
+      .filter(session => session.userId === userId)
+      .sort((a, b) => new Date(b.startTime!).getTime() - new Date(a.startTime!).getTime());
+
+    // Get sets for the specific exercise from these sessions
+    const exerciseSets = Array.from(this.workoutSets.values())
+      .filter(set => {
+        const sessionExists = userSessions.some(session => session.id === set.sessionId);
+        return sessionExists && set.exerciseId === exerciseId;
+      })
+      .sort((a, b) => new Date(b.completedAt!).getTime() - new Date(a.completedAt!).getTime())
+      .slice(0, limit);
+
+    return exerciseSets;
   }
 }
 

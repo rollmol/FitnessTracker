@@ -58,6 +58,13 @@ This is a modern fitness tracking application designed as a Progressive Web App 
 - Set-by-set data collection (weight, reps, RPE)
 - Rest timer with customizable durations
 - Exercise progression tracking
+- RPE-based intelligent workout adjustments
+
+### AI-Powered Features
+**RPE Analysis System**: Analyzes workout intensity using Rate of Perceived Exertion
+**Smart Suggestions**: Provides weight, rep, and rest recommendations based on performance history
+**Progression Tracking**: Monitors volume progression and training load adaptation
+**Performance Feedback**: Real-time coaching based on RPE trends and workout data
 
 ### Gamification Features
 - XP-based leveling system
@@ -120,6 +127,7 @@ This is a modern fitness tracking application designed as a Progressive Web App 
 Changelog:
 - June 26, 2025. Initial setup
 - June 26, 2025. Added demo mode feature with toggle switch, data protection, and visual indicators
+- June 26, 2025. Implemented RPE-based intelligent workout suggestions system with performance analysis
 ```
 
 ## User Preferences
