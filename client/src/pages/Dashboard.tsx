@@ -7,8 +7,7 @@ import { Bell, Settings, Play, Dumbbell, ChartLine, Trophy, History } from "luci
 import DemoModeToggle from "@/components/DemoModeToggle";
 import { useDemoMode } from "@/hooks/useDemoMode";
 
-// Mock user ID for demo - in real app this would come from auth
-const MOCK_USER_ID = 1;
+import { useCurrentUser } from "@/contexts/UserContext";
 
 interface UserStats {
   weeklyWorkouts: number;
@@ -30,9 +29,12 @@ interface WorkoutProgram {
 export default function Dashboard() {
   const [, setLocation] = useLocation();
   const { isDemoMode, toggleDemoMode } = useDemoMode();
+  
+  const { currentUser } = useCurrentUser();
+  const userId = currentUser?.id || 1;
 
   const { data: stats } = useQuery<UserStats>({
-    queryKey: [`/api/users/${MOCK_USER_ID}/stats`],
+    queryKey: [`/api/users/${userId}/stats`],
   });
 
   const { data: programs } = useQuery<WorkoutProgram[]>({
@@ -40,7 +42,7 @@ export default function Dashboard() {
   });
 
   const { data: userBadges } = useQuery({
-    queryKey: [`/api/users/${MOCK_USER_ID}/badges`],
+    queryKey: [`/api/users/${userId}/badges`],
   });
 
   const { data: allBadges } = useQuery({
@@ -83,7 +85,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-2xl font-bold">
-              {getTimeBasedGreeting()}, Alex!
+              {getTimeBasedGreeting()}, {currentUser?.name || "Alex"}!
             </h1>
             <p className="text-blue-100 text-sm">Prêt à dominer votre entraînement ?</p>
           </div>

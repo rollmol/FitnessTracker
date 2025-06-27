@@ -1,6 +1,18 @@
+import './env.ts';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
+console.log('🌍 Environment loaded from .env');
+console.log('DATABASE_URL found:', !!process.env.DATABASE_URL);
 
 const app = express();
 app.use(express.json());
@@ -56,15 +68,18 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+	// ALWAYS serve the app on port 5000
+	// this serves both the API and the client.
+	// It is the only port that is not firewalled.
+	const port = Number(process.env.PORT) || 5000;
+	const host = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
+
+	server.listen({
+	  port,
+	  host,
+	}, () => {
+	  log(`serving on port ${port}`);
+	  log(`Environment: ${process.env.NODE_ENV}`);
+	  log(`Host: ${host}`);
+	});
 })();
