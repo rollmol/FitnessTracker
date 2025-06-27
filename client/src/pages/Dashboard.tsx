@@ -47,8 +47,20 @@ export default function Dashboard() {
     queryKey: ["/api/badges"],
   });
 
-  // Get today's workout (simplified logic)
-  const todaysWorkout = programs?.[0]; // For demo, use first program
+  // Weekly workout schedule
+  const weeklySchedule = [
+    { day: 0, name: "Repos", programId: null }, // Dimanche
+    { day: 1, name: "Haut du corps A - Force", programId: 1 }, // Lundi
+    { day: 2, name: "Bas du corps A - Force", programId: 2 }, // Mardi
+    { day: 3, name: "Repos", programId: null }, // Mercredi
+    { day: 4, name: "Haut du corps B - Volume", programId: 3 }, // Jeudi
+    { day: 5, name: "Bas du corps B - Explosivité", programId: 4 }, // Vendredi
+    { day: 6, name: "Repos", programId: null }, // Samedi
+  ];
+
+  const today = new Date().getDay();
+  const todaysSchedule = weeklySchedule.find(schedule => schedule.day === today);
+  const todaysWorkout = todaysSchedule?.programId ? programs?.find(p => p.id === todaysSchedule.programId) : null;
 
   const getTimeBasedGreeting = () => {
     const hour = new Date().getHours();
@@ -57,7 +69,7 @@ export default function Dashboard() {
     return "Bonsoir";
   };
 
-  const recentBadges = userBadges?.slice(-3) || [];
+  const recentBadges = Array.isArray(userBadges) ? userBadges.slice(-3) : [];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -99,26 +111,35 @@ export default function Dashboard() {
         </div>
 
         {/* Today's Workout Card */}
-        {todaysWorkout && (
-          <Card className="bg-white/10 backdrop-blur-sm border-0 text-white">
-            <div className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold text-lg">{todaysWorkout.name}</h3>
-                  <p className="text-blue-100 text-sm">
-                    6 exercices • {todaysWorkout.estimatedDuration}-{todaysWorkout.estimatedDuration + 15} min
-                  </p>
-                </div>
+        <Card className="bg-white/10 backdrop-blur-sm border-0 text-white">
+          <div className="p-4">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-lg">
+                  {todaysSchedule?.name || "Entraînement du jour"}
+                </h3>
+                <p className="text-blue-100 text-sm">
+                  {todaysWorkout ? 
+                    `6 exercices • ${todaysWorkout.estimatedDuration}-${todaysWorkout.estimatedDuration + 15} min` :
+                    "Jour de repos - Récupération active recommandée"
+                  }
+                </p>
+              </div>
+              {todaysWorkout ? (
                 <Button
                   className="bg-orange-500 hover:bg-orange-600 text-white"
                   onClick={() => setLocation(`/workout/${todaysWorkout.id}`)}
                 >
                   Commencer <Play className="ml-2 h-4 w-4" />
                 </Button>
-              </div>
+              ) : (
+                <Badge className="bg-green-500/20 text-green-200 border-green-400">
+                  Repos
+                </Badge>
+              )}
             </div>
-          </Card>
-        )}
+          </div>
+        </Card>
       </div>
 
       {/* Quick Stats */}
@@ -144,6 +165,61 @@ export default function Dashboard() {
                 </div>
                 <div className="text-xs text-gray-500">Total</div>
               </div>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      {/* Weekly Schedule */}
+      <div className="px-6 mb-6">
+        <h2 className="text-lg font-semibold text-gray-800 mb-4">Planning de la semaine</h2>
+        <Card className="shadow-sm">
+          <div className="p-4">
+            <div className="space-y-3">
+              {weeklySchedule.map((schedule) => {
+                const dayNames = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                const isToday = schedule.day === today;
+                const isRestDay = !schedule.programId;
+                
+                return (
+                  <div
+                    key={schedule.day}
+                    className={`flex items-center justify-between p-3 rounded-lg ${
+                      isToday ? 'bg-blue-50 border-2 border-blue-200' : 'bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-2 h-2 rounded-full ${
+                        isToday ? 'bg-blue-500' : isRestDay ? 'bg-gray-400' : 'bg-green-500'
+                      }`} />
+                      <div>
+                        <div className={`font-medium ${isToday ? 'text-blue-900' : 'text-gray-800'}`}>
+                          {dayNames[schedule.day]}
+                        </div>
+                        <div className={`text-sm ${isToday ? 'text-blue-700' : 'text-gray-600'}`}>
+                          {schedule.name}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      {isToday && (
+                        <Badge className="bg-blue-100 text-blue-800 border-blue-300">
+                          Aujourd'hui
+                        </Badge>
+                      )}
+                      {isRestDay ? (
+                        <Badge variant="outline" className="text-gray-600 border-gray-300">
+                          Repos
+                        </Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-green-600 border-green-300">
+                          Entraînement
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </Card>
@@ -209,8 +285,8 @@ export default function Dashboard() {
         <div className="px-6 mb-6">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">Recent Achievements</h2>
           <div className="flex space-x-3 overflow-x-auto pb-2">
-            {recentBadges.map((userBadge, index) => {
-              const badge = allBadges?.find(b => b.id === userBadge.badgeId);
+            {recentBadges.map((userBadge: any, index: number) => {
+              const badge = Array.isArray(allBadges) ? allBadges.find((b: any) => b.id === userBadge.badgeId) : undefined;
               if (!badge) return null;
               
               const gradients = [
