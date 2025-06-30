@@ -1,7 +1,7 @@
 // server/storage.ts - Version Supabase
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { eq, desc, and, sql } from 'drizzle-orm';
+import { eq, desc, and, sql, inArray } from 'drizzle-orm';
 import { 
   users, exercises, workoutPrograms, workoutSessions, workoutSets, badges, userBadges, personalRecords,
   type User, type InsertUser, type Exercise, type WorkoutProgram, type WorkoutSession, 
@@ -371,32 +371,32 @@ export class SupabaseStorage implements IStorage {
   // EXERCISE HISTORY
   // ==========================================
 
-  async getUserExerciseHistory(userId: number, exerciseId: number, limit: number = 10): Promise<WorkoutSet[]> {
-    try {
-      // Récupérer les sessions de l'utilisateur
-      const userSessions = await db.select({ id: workoutSessions.id })
-        .from(workoutSessions)
-        .where(eq(workoutSessions.userId, userId));
+async getUserExerciseHistory(userId: number, exerciseId: number, limit: number = 10): Promise<WorkoutSet[]> {
+  try {
+    // Récupérer les sessions de l'utilisateur
+    const userSessions = await db.select({ id: workoutSessions.id })
+      .from(workoutSessions)
+      .where(eq(workoutSessions.userId, userId));
 
-      if (userSessions.length === 0) return [];
+    if (userSessions.length === 0) return [];
 
-      const sessionIds = userSessions.map(s => s.id);
+    const sessionIds = userSessions.map(s => s.id);
 
-      // Récupérer les sets pour cet exercice
-      const exerciseSets = await db.select().from(workoutSets)
-        .where(and(
-          eq(workoutSets.exerciseId, exerciseId),
-          sql`${workoutSets.sessionId} = ANY(${sessionIds})`
-        ))
-        .orderBy(desc(workoutSets.completedAt))
-        .limit(limit);
+    // ✅ CORRECTIF : Utiliser inArray de Drizzle (plus propre)
+    const exerciseSets = await db.select().from(workoutSets)
+      .where(and(
+        eq(workoutSets.exerciseId, exerciseId),
+        inArray(workoutSets.sessionId, sessionIds) // ✅ Solution Drizzle native
+      ))
+      .orderBy(desc(workoutSets.completedAt))
+      .limit(limit);
 
-      return exerciseSets;
-    } catch (error) {
-      console.error('Error getting user exercise history:', error);
-      return [];
-    }
+    return exerciseSets;
+  } catch (error) {
+    console.error('Error getting user exercise history:', error);
+    return [];
   }
+}
 
   // ==========================================
   // INITIALISATION DES DONNÉES (SEEDING)
