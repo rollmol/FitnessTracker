@@ -12,6 +12,8 @@ import Badges from "@/pages/Badges";
 import Onboarding from "@/pages/Onboarding";
 import BottomNavigation from "@/components/BottomNavigation";
 import NotFound from "@/pages/not-found";
+import History from "@/pages/History";
+
 
 function Router() {
   const { currentUser, isLoading } = useCurrentUser();
@@ -46,6 +48,7 @@ function Router() {
           <Route path="/workout/:id" component={ActiveWorkout} />
           <Route path="/progress" component={Progress} />
           <Route path="/badges" component={Badges} />
+		  <Route path="/history" component={History} />
           <Route component={NotFound} />
         </Switch>
       </div>

@@ -270,15 +270,18 @@ export default function Dashboard() {
             </div>
           </Card>
 
-          <Card className="shadow-sm cursor-pointer hover:shadow-md transition-shadow">
-            <div className="p-4 text-left">
-              <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-3">
-                <History className="text-purple-500 h-6 w-6" />
-              </div>
-              <h3 className="font-semibold text-gray-800">Historique</h3>
-              <p className="text-sm text-gray-500">Entraînements passés</p>
-            </div>
-          </Card>
+		<Card 
+		  className="shadow-sm cursor-pointer hover:shadow-md transition-shadow"
+		  onClick={() => setLocation("/history")} // ✅ Ajouter cette ligne
+		>
+		  <div className="p-4 text-left">
+			<div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mb-3">
+			  <History className="text-purple-500 h-6 w-6" />
+			</div>
+			<h3 className="font-semibold text-gray-800">Historique</h3>
+			<p className="text-sm text-gray-500">Entraînements passés</p>
+		  </div>
+		</Card>
         </div>
       </div>
 

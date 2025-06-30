@@ -60,7 +60,7 @@ export default function ActiveWorkout() {
   const [workoutSets, setWorkoutSets] = useState<WorkoutSet[]>([]);
   const [currentWeight, setCurrentWeight] = useState("");
   const [currentReps, setCurrentReps] = useState("");
-  const [currentRPE, setCurrentRPE] = useState([7]);
+  const [currentRPE, setCurrentRPE] = useState([0]); // ✅ Garde 0 comme valeur par défaut "non sélectionnée"
   const [isResting, setIsResting] = useState(false);
   const [restDuration, setRestDuration] = useState(180);
   const [sessionId, setSessionId] = useState<number | null>(null);
@@ -167,10 +167,30 @@ export default function ActiveWorkout() {
   const timeDisplay = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
   const handleCompleteSet = () => {
-    if (!currentWeight || !currentReps || !sessionId) {
+    // ✅ VALIDATION AMÉLIORÉE
+    if (!currentWeight || !currentReps) {
       toast({
-        title: "Missing information",
-        description: "Please enter weight and reps",
+        title: "Informations manquantes",
+        description: "Veuillez saisir le poids et les répétitions",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // ✅ VALIDATION RPE STRICTE
+    if (currentRPE[0] === 0) {
+      toast({
+        title: "RPE requis",
+        description: "Veuillez évaluer la difficulté de cette série (RPE 1-10)",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!sessionId) {
+      toast({
+        title: "Erreur de session",
+        description: "Session non initialisée",
         variant: "destructive",
       });
       return;
@@ -245,6 +265,7 @@ export default function ActiveWorkout() {
       setCurrentSetIndex(0);
       setCurrentWeight("");
       setCurrentReps("");
+      setCurrentRPE([0]); // ✅ Reset RPE lors du changement d'exercice
     }
   };
 
@@ -254,6 +275,7 @@ export default function ActiveWorkout() {
       setCurrentSetIndex(0);
       setCurrentWeight("");
       setCurrentReps("");
+      setCurrentRPE([0]); // ✅ Reset RPE lors du changement d'exercice
     }
   };
 
@@ -419,25 +441,39 @@ export default function ActiveWorkout() {
           <Button
             className="w-full gradient-secondary text-white font-semibold py-3 mb-4"
             onClick={handleCompleteSet}
-            disabled={!currentWeight || !currentReps || currentRPE[0] === 0 || saveSetMutation.isPending}
+            disabled={
+              !currentWeight || 
+              !currentReps || 
+              currentRPE[0] === 0 ||  // ✅ Validation stricte : 0 = non valide
+              saveSetMutation.isPending
+            }
           >
-            {saveSetMutation.isPending ? "Sauvegarde..." : currentRPE[0] === 0 ? "Saisissez le RPE pour continuer" : "Valider la série"}
+            {saveSetMutation.isPending 
+              ? "Sauvegarde..." 
+              : currentRPE[0] === 0 
+                ? "⚠️ Saisissez le RPE pour continuer" 
+                : "Valider la série"
+            }
           </Button>
 
           {/* RPE Rating */}
-          <Card className={`p-4 transition-colors ${currentRPE[0] === 0 ? 'bg-orange-50 border-orange-200' : 'bg-gray-50'}`}>
+          <Card className={`p-4 transition-colors ${
+            currentRPE[0] === 0 
+              ? 'bg-red-50 border-red-200'  // ✅ Rouge plus visible pour RPE manquant
+              : 'bg-gray-50'
+          }`}>
             <div className="flex items-center justify-between mb-3">
               <h3 className="font-semibold">Rate of Perceived Exertion (RPE)</h3>
               {currentRPE[0] === 0 && (
-                <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">
-                  Requis
+                <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded-full font-medium">
+                  ⚠️ Requis
                 </span>
               )}
             </div>
             
             {currentRPE[0] === 0 && (
-              <p className="text-sm text-orange-700 mb-3">
-                Évaluez la difficulté de cette série pour continuer
+              <p className="text-sm text-red-700 mb-3 font-medium">
+                ⚠️ Évaluez la difficulté de cette série pour continuer
               </p>
             )}
             
@@ -449,18 +485,25 @@ export default function ActiveWorkout() {
               value={currentRPE}
               onValueChange={setCurrentRPE}
               max={10}
-              min={0}
+              min={1}  // ✅ IMPORTANT : Commencer à 1 au lieu de 0
               step={1}
               className="w-full mb-2"
             />
             <div className="flex justify-between text-xs text-gray-500 mb-2">
-              {Array.from({ length:11 }, (_, i) => (
-                <span key={i} className={i === 0 ? 'text-transparent' : ''}>{i}</span>
+              {Array.from({ length: 10 }, (_, i) => (
+                <span key={i + 1}>{i + 1}</span>  // ✅ Afficher 1-10 au lieu de 0-10
               ))}
             </div>
             <div className="text-center">
-              <span className={`text-lg font-bold ${currentRPE[0] === 0 ? 'text-orange-600' : 'text-blue-600'}`}>
-                {currentRPE[0] === 0 ? 'Sélectionnez un RPE' : `RPE: ${currentRPE[0]}/10`}
+              <span className={`text-lg font-bold ${
+                currentRPE[0] === 0 
+                  ? 'text-red-600'      // ✅ Rouge pour attirer l'attention
+                  : 'text-blue-600'
+              }`}>
+                {currentRPE[0] === 0 
+                  ? '⚠️ RPE requis (1-10)' 
+                  : `RPE: ${currentRPE[0]}/10`
+                }
               </span>
               {currentRPE[0] > 0 && (
                 <div className="text-sm text-gray-600 mt-1">
