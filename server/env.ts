@@ -7,8 +7,14 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Charger le .env depuis la racine du projet
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+// ✅ CORRECTIF : Ne charger .env qu'en développement
+if (process.env.NODE_ENV !== 'production') {
+  // Charger le .env depuis la racine du projet (seulement en dev)
+  dotenv.config({ path: path.resolve(__dirname, '../.env') });
+  console.log('🌍 Environment loaded from .env file');
+} else {
+  console.log('🌍 Environment loaded from Railway variables');
+}
 
-console.log('🌍 Environment loaded');
 console.log('DATABASE_URL found:', !!process.env.DATABASE_URL);
+console.log('NODE_ENV:', process.env.NODE_ENV);
